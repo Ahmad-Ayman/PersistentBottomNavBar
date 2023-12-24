@@ -82,6 +82,7 @@ class PersistentTabView extends PersistentTabViewBase {
 
   const PersistentTabView.custom(
     this.context, {
+    required final double height,
     required final Widget customWidget,
     required final int itemCount,
     required this.screens,
@@ -108,6 +109,7 @@ class PersistentTabView extends PersistentTabViewBase {
             "If you declare the onWillPop function, you will have to handle the back function functionality yourself as your onWillPop function will override the defualt function."),
         super(
           key: key,
+          navBarHeight: height,
           context: context,
           screens: screens,
           controller: controller,
