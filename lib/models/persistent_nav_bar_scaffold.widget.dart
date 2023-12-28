@@ -378,19 +378,19 @@ class _TabSwitchingViewState extends State<_TabSwitchingView>
   void _lastPageAnimation() {
     if (_lastIndex! > widget.currentTabIndex &&
         !_animationControllers[_lastIndex!]!.isAnimating) {
+      // If moving from _lastIndex to the left
       _animationControllers[_lastIndex!]!.reset();
-      _animations[_lastIndex!] =
-          Tween(begin: 0.toDouble(), end: _animationValue)
-              .chain(CurveTween(curve: widget.screenTransitionAnimation!.curve))
-              .animate(_animationControllers[_lastIndex!]!);
+      _animations[_lastIndex!] = Tween<double>(begin: 1, end: 0.2)
+          .chain(CurveTween(curve: widget.screenTransitionAnimation!.curve))
+          .animate(_animationControllers[_lastIndex!]!);
       _animationControllers[_lastIndex!]!.forward();
     } else if (_lastIndex! < widget.currentTabIndex &&
         !_animationControllers[_lastIndex!]!.isAnimating) {
+      // If moving from _lastIndex to the right
       _animationControllers[_lastIndex!]!.reset();
-      _animations[_lastIndex!] =
-          Tween(begin: 0.toDouble(), end: -_animationValue!)
-              .chain(CurveTween(curve: widget.screenTransitionAnimation!.curve))
-              .animate(_animationControllers[_lastIndex!]!);
+      _animations[_lastIndex!] = Tween<double>(begin: 1, end: 0.2)
+          .chain(CurveTween(curve: widget.screenTransitionAnimation!.curve))
+          .animate(_animationControllers[_lastIndex!]!);
       _animationControllers[_lastIndex!]!.forward();
     }
   }
@@ -398,20 +398,20 @@ class _TabSwitchingViewState extends State<_TabSwitchingView>
   void _newPageAnimation() {
     if (_lastIndex! > widget.currentTabIndex &&
         !_animationControllers[widget.currentTabIndex]!.isAnimating) {
+      // If moving to the left
       _animationControllers[widget.currentTabIndex]!.reset();
-      _animations[widget.currentTabIndex] =
-          Tween(begin: -_animationValue!, end: 0.toDouble())
-              .chain(CurveTween(curve: widget.screenTransitionAnimation!.curve))
-              .animate(_animationControllers[widget.currentTabIndex]!);
+      _animations[widget.currentTabIndex] = Tween<double>(begin: 0.2, end: 1)
+          .chain(CurveTween(curve: widget.screenTransitionAnimation!.curve))
+          .animate(_animationControllers[widget.currentTabIndex]!);
       _animationControllers[widget.currentTabIndex]!.forward();
       _animationCompletionIndex = true;
     } else if (_lastIndex! < widget.currentTabIndex &&
         !_animationControllers[widget.currentTabIndex]!.isAnimating) {
+      // If moving to the right
       _animationControllers[widget.currentTabIndex]!.reset();
-      _animations[widget.currentTabIndex] =
-          Tween(begin: _animationValue, end: 0.toDouble())
-              .chain(CurveTween(curve: widget.screenTransitionAnimation!.curve))
-              .animate(_animationControllers[widget.currentTabIndex]!);
+      _animations[widget.currentTabIndex] = Tween<double>(begin: 0.2, end: 1)
+          .chain(CurveTween(curve: widget.screenTransitionAnimation!.curve))
+          .animate(_animationControllers[widget.currentTabIndex]!);
       _animationControllers[widget.currentTabIndex]!.forward();
       _animationCompletionIndex = true;
     }
@@ -440,9 +440,8 @@ class _TabSwitchingViewState extends State<_TabSwitchingView>
                               ? AnimatedBuilder(
                                   animation: _animations[index]!,
                                   builder: (final context, final child) =>
-                                      Transform.translate(
-                                    offset:
-                                        Offset(_animations[index]!.value, 0),
+                                      Opacity(
+                                    opacity: _animations[index]!.value,
                                     child: widget.tabBuilder(context, index),
                                   ),
                                 )
