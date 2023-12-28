@@ -328,7 +328,7 @@ class _TabSwitchingViewState extends State<_TabSwitchingView>
       for (int i = 0; i < widget.tabCount!; ++i) {
         _animationControllers[i] = AnimationController(
             vsync: this, duration: widget.screenTransitionAnimation!.duration);
-        _animations[i] = Tween(begin: 0.toDouble(), end: 0.toDouble())
+        _animations[i] = Tween(begin: 1.toDouble(), end: 0.toDouble())
             .chain(CurveTween(curve: widget.screenTransitionAnimation!.curve))
             .animate(_animationControllers[i]!);
       }
